@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gerador de Parecer Final I20 | COPEL</title>
+<style>
+/* Variáveis de cores padrão da identidade visual */
+:root {
+    --copel-orange: #FF6600;
+    --copel-orange-dark: #E65C00;
+    --bg-color: #F4F6F9;
+    --card-bg: #FFFFFF;
+    --text-main: #2C3E50;
+    --text-muted: #7F8C8D;
+    --border-color: #DCE1E5;
+    --input-bg: #FAFCFE;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg-color); color: var(--text-main); line-height: 1.4; }
+
+/* Topo e cabeçalho do sistema */
+.topo { background: var(--copel-orange); height: 65px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+.topo-brand { display: flex; align-items: center; gap: 15px; }
+.logo { height: 38px; width: auto; object-fit: contain; }
+.titulo { color: #FFF; font-size: 16px; font-weight: 700; border-left: 3px solid rgba(255,255,255,0.6); padding-left: 12px; }
+.badge-sistema { background: rgba(255,255,255,0.2); color: #FFF; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+
+/* Layout e grid principal */
+.container { width: 96%; max-width: 1400px; margin: 12px auto; padding-bottom: 20px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.card { background: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }
+.card-header { background: var(--card-bg); color: var(--text-main); padding: 10px 14px; font-size: 12px; font-weight: 700; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; }
+.card-header::before { content: ''; width: 3px; height: 12px; background: var(--copel-orange); border-radius: 2px; }
+.card-body { padding: 12px 14px; }
+
+/* Formulários e campos de entrada */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; align-items: center; }
+label { font-size: 11px; font-weight: 600; color: var(--text-main); }
+input, select { width: 100%; height: 30px; padding: 2px 8px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--input-bg); font-size: 12px; color: var(--text-main); transition: 0.2s; }
+input:focus, select:focus { outline: none; border-color: var(--copel-orange); background: #FFF; box-shadow: 0 0 0 2px rgba(255,102,0,0.1); }
+.info { margin-top: 10px; padding: 6px 10px; background: #E8F8F0; color: #0E8F42; border: 1px solid #C3E6D2; border-radius: 4px; font-size: 10px; font-weight: 700; }
+
+/* Seções e campos condicionais */
+.dynamic-section { display: flex; flex-direction: column; gap: 10px; }
+.campo-condicional { display: none; flex-direction: column; gap: 4px; }
+.campo-condicional.ativo { display: flex !important; }
+
+/* Bloco do Parecer Final e botões de ação */
+.parecer { background: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; }
+.parecer-header { padding: 10px 14px; font-size: 12px; font-weight: 700; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; }
+.parecer-header::before { content: ''; width: 3px; height: 12px; background: var(--copel-orange); border-radius: 2px; }
+textarea { width: 100%; height: 170px; border: none; resize: vertical; padding: 12px; background: #FAFCFE; font-family: 'Consolas', monospace; font-size: 12px; color: #2C3E50; }
+textarea:focus { outline: none; }
+.botoes { padding: 10px 14px; background: #F9FAFC; border-top: 1px solid var(--border-color); display: flex; gap: 8px; }
+
+/* Estilização dos botões */
+button { background: var(--copel-orange); color: white; border: none; border-radius: 4px; padding: 6px 14px; cursor: pointer; font-weight: 600; font-size: 11px; transition: 0.2s; }
+button:hover { background: var(--copel-orange-dark); }
+button.btn-secondary { background: #6C7A89; }
+button.btn-secondary:hover { background: #5A6573; }
+button.btn-danger { background: #E74C3C; }
+button.btn-danger:hover { background: #C0392B; }
+
+.footer-credits { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 15px; }
+@media(max-width: 900px) { .grid, .form-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- Cabeçalho Visual -->
+<header class="topo">
+    <div class="topo-brand">
+        <img src="logo.png" class="logo" alt="Logo Copel" onerror="this.style.display='none'">
+        <div class="titulo">Gerador de Parecer Final I20</div>
+    </div>
+    <div class="badge-sistema">ANÁLISE DE PROJETOS DA MEDIÇÃO</div>
+</header>
+
+<div class="container">
+    <div class="grid">
+        <!-- Card 1: Dados Principais do Projeto -->
+        <div class="card">
+            <div class="card-header">DADOS PARA PREENCHIMENTO DO PROJETO</div>
+            <div class="card-body">
+                <div class="form-grid">
+                    <label>Há UC Fat B para troca de padrão</label>
+                    <select id="trocaPadrao" onchange="atualizarCampos()">
+                        <option value="NÃO">NÃO</option>
+                        <option value="SIM">SIM</option>
+                    </select>
+
+                    <label>Corrente disjuntor geral</label>
+                    <select id="disjuntor">
+                        <option value="" disabled selected>Selecione...</option>
+                        <option value="3X300A">3X300A</option>
+                        <option value="3X400A">3X400A</option>
+                        <option value="3X500A">3X500A</option>
+                        <option value="3X600A">3X600A</option>
+                        <option value="3X700A">3X700A</option>
+                        <option value="3X800A">3X800A</option>
+                    </select>
+
+                    <label>Medição para bomba de incêndio</label>
+                    <select id="bomba" onchange="atualizarCampos()">
+                        <option value="NÃO">NÃO</option>
+                        <option value="SIM">SIM</option>
+                    </select>
+
+                    <label>Número do Projeto PEW</label>
+                    <input id="pew" placeholder="Ex: 00001/2017">
+
+                    <label>Município</label>
+                    <input id="cidade" placeholder="Ex: Curitiba">
+
+                    <label>Logradouro</label>
+                    <input id="logradouro" placeholder="Ex: Rua Izidoro Biazero">
+
+                    <label>Número / Complemento</label>
+                    <input id="numero" placeholder="Ex: 158">
+                </div>
+                <div class="info">USAR PARA CLIENTE ÚNICO ATENDIDO EM BT COM MEDIÇÃO INDIRETA</div>
+            </div>
+        </div>
+
+        <!-- Card 2: Parâmetros Dinâmicos / Condicionais -->
+        <div class="card">
+            <div class="card-header">PARÂMETROS ADICIONAIS</div>
+            <div class="card-body">
+                <div class="dynamic-section">
+                    <div id="linhaUC" class="campo-condicional">
+                        <label>Número da UC Fat B Existente</label>
+                        <input id="uc" placeholder="Informe a UC">
+                    </div>
+
+                    <div id="linhaBomba" class="campo-condicional">
+                        <label>Disjuntor da medição para bomba de incêndio</label>
+                        <select id="disjuntorBomba">
+                            <option value="" disabled selected>Selecione...</option>
+                            <option value="3X50A">3X50A</option>
+                            <option value="3X63A">3X63A</option>
+                            <option value="3X70A">3X70A</option>
+                            <option value="3X80A">3X80A</option>
+                            <option value="3X100A">3X100A</option>
+                            <option value="3X125A">3X125A</option>
+                            <option value="3X150A">3X150A</option>
+                            <option value="3X175A">3X175A</option>
+                            <option value="3X200A">3X200A</option>
+                        </select>
+                    </div>
+
+                    <div id="placeholderAdicionais" style="color: var(--text-muted); font-size: 11px; text-align: center; padding: 15px 0;">
+                        Nenhum parâmetro adicional ativo no momento.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bloco de Saída do Parecer -->
+    <div class="parecer">
+        <div class="parecer-header">PARECER FINAL NA APROVAÇÃO DA SS I20</div>
+        <textarea id="resultado" placeholder="O texto gerado do parecer aparecerá aqui..."></textarea>
+        <div class="botoes">
+            <button onclick="gerarParecer()">Gerar Parecer</button>
+            <button class="btn-secondary" onclick="copiarParecer()">Copiar Texto</button>
+            <button class="btn-danger" onclick="limparDados()">Limpar Campos</button>
+        </div>
+    </div>
+
+    <div class="footer-credits">Desenvolvido por Jose Eduardo Silva Dias - Registro: 51407 - Análise de Projetos</div>
+</div>
+
+<script>
+// Alterna a visibilidade dos campos extras com base nas seleções principais
+function atualizarCampos() {
+    const trocaSim = document.getElementById("trocaPadrao").value === "SIM";
+    const bombaSim = document.getElementById("bomba").value === "SIM";
+
+    document.getElementById("linhaUC").classList.toggle("ativo", trocaSim);
+    if (!trocaSim) document.getElementById("uc").value = "";
+
+    document.getElementById("linhaBomba").classList.toggle("ativo", bombaSim);
+    if (!bombaSim) document.getElementById("disjuntorBomba").selectedIndex = 0;
+
+    document.getElementById("placeholderAdicionais").style.display = (trocaSim || bombaSim) ? "none" : "block";
+}
+
+// Valida campos obrigatórios e monta o texto final do parecer
+function gerarParecer() {
+    const ids = [
+        { id: "disjuntor", msg: "Selecione a corrente do disjuntor geral." },
+        { id: "pew", msg: "Informe o número do Projeto PEW." },
+        { id: "cidade", msg: "Informe o município." },
+        { id: "logradouro", msg: "Informe o logradouro." },
+        { id: "numero", msg: "Informe o número / complemento." }
+    ];
+
+    // Loop de validação dos campos fixos essenciais
+    for (let item of ids) {
+        let el = document.getElementById(item.id);
+        if (!el.value.trim()) {
+            alert(item.msg);
+            el.focus();
+            return;
+        }
+    }
+
+    const troca = document.getElementById("trocaPadrao").value;
+    const bomba = document.getElementById("bomba").value;
+    const ucElem = document.getElementById("uc");
+    const disjBombaElem = document.getElementById("disjuntorBomba");
+
+    // Validação condicional da UC para Troca de Padrão
+    if (troca === "SIM" && !ucElem.value.trim()) {
+        alert("O número da UC Fat B existente é obrigatório quando há troca de padrão.");
+        ucElem.focus();
+        return;
+    }
+
+    // Validação condicional do disjuntor de Incêndio
+    if (bomba === "SIM" && !disjBombaElem.value) {
+        alert("Selecione a corrente do disjuntor da medição para bomba de incêndio.");
+        disjBombaElem.focus();
+        return;
+    }
+
+    const pew = document.getElementById("pew").value.trim();
+    const pewFormatado = pew.replace('/', ' ');
+    const cidade = document.getElementById("cidade").value.trim().toUpperCase();
+    const logradouro = document.getElementById("logradouro").value.trim().toUpperCase();
+    const numero = document.getElementById("numero").value.trim();
+    const disj = document.getElementById("disjuntor").value;
+    const uc = ucElem.value.trim();
+
+    // Define o cabeçalho do texto dependendo se é Troca de Padrão ou Ligação Nova
+    let texto = troca === "SIM" 
+        ? `Conforme projeto elétrico ${pew}, favor gerar TROCA DE PADRÃO para a UC: ${uc}, considerando as seguintes características:`
+        : `Conforme projeto elétrico ${pew}, favor gerar PEDIDO DE LIGAÇÃO, considerando as seguintes características:`;
+
+    texto += `\n\n- Cidade: ${cidade};\n- Endereço: ${logradouro}, ${numero};\n- Complemento da UC: PE ${pewFormatado};\n- Grupo de Tensão: B;\n- Disjuntor: ${disj};\n- Declaração de Carga: Qtde = 1 em 4) Disjuntor > Disjuntor Individual > Trifásico Maior que 200A;`;
+
+    // Acrescenta trecho da bomba de incêndio se selecionado SIM
+    if (bomba === "SIM") {
+        texto += `\n\nFoi liberada uma segunda medição em BT na mesma entrada de serviço com disjuntor ${disjBombaElem.value} exclusiva para sistema de combate a incêndio.`;
+    }
+
+    document.getElementById("resultado").value = texto;
+}
+
+// Copia o conteúdo gerado para a área de transferência
+function copiarParecer() {
+    const textarea = document.getElementById("resultado");
+    if (!textarea.value) {
+        alert("Gere o parecer antes de copiar.");
+        return;
+    }
+    navigator.clipboard.writeText(textarea.value);
+    alert("Parecer copiado para a área de transferência.");
+}
+
+// Reseta todos os campos do formulário para o padrão inicial
+function limparDados() {
+    document.querySelectorAll("input").forEach(input => input.value = "");
+    document.querySelectorAll("select").forEach(select => select.selectedIndex = 0);
+    document.getElementById("resultado").value = "";
+    atualizarCampos();
+}
+
+// Inicializa o estado visual correto ao carregar a página
+atualizarCampos();
+</script>
+
+</body>
+</html>
