@@ -1,74 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gerador de Parecer Final I20 | COPEL</title>
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-<style>
-/* Variáveis de cores padrão da identidade visual */
-:root {
-    --copel-orange: #FF6600;
-    --copel-orange-dark: #E65C00;
-    --bg-color: #F4F6F9;
-    --card-bg: #FFFFFF;
-    --text-main: #2C3E50;
-    --text-muted: #7F8C8D;
-    --border-color: #DCE1E5;
-    --input-bg: #FAFCFE;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg-color); color: var(--text-main); line-height: 1.4; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gerador de Parecer Final I20 | COPEL</title>
+    
+    <!-- ÍCONE DA ABA E BARRA DE FAVORITOS (SVG EMBUTIDO - RAIO LARANJA) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF6600'><path d='M11 15H6l7-14v8h5l-7 14v-8z'/></svg>">
 
-/* Topo e cabeçalho do sistema */
-.topo { background: var(--copel-orange); height: 65px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-.topo-brand { display: flex; align-items: center; gap: 15px; }
-.logo { height: 38px; width: auto; object-fit: contain; }
-.titulo { color: #FFF; font-size: 16px; font-weight: 700; border-left: 3px solid rgba(255,255,255,0.6); padding-left: 12px; }
-.badge-sistema { background: rgba(255,255,255,0.2); color: #FFF; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+    <style>
+        /* Variáveis de cores padrão da identidade visual */
+        :root {
+            --copel-orange: #FF6600;
+            --copel-orange-dark: #E65C00;
+            --bg-color: #F4F6F9;
+            --card-bg: #FFFFFF;
+            --text-main: #2C3E50;
+            --text-muted: #7F8C8D;
+            --border-color: #DCE1E5;
+            --input-bg: #FAFCFE;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg-color); color: var(--text-main); line-height: 1.4; }
 
-/* Layout e grid principal */
-.container { width: 96%; max-width: 1400px; margin: 12px auto; padding-bottom: 20px; }
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-.card { background: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }
-.card-header { background: var(--card-bg); color: var(--text-main); padding: 10px 14px; font-size: 12px; font-weight: 700; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; }
-.card-header::before { content: ''; width: 3px; height: 12px; background: var(--copel-orange); border-radius: 2px; }
-.card-body { padding: 12px 14px; }
+        /* Topo e cabeçalho do sistema */
+        .topo { background: var(--copel-orange); height: 65px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .topo-brand { display: flex; align-items: center; gap: 15px; }
+        .logo { height: 38px; width: auto; object-fit: contain; }
+        .titulo { color: #FFF; font-size: 16px; font-weight: 700; border-left: 3px solid rgba(255,255,255,0.6); padding-left: 12px; }
+        .badge-sistema { background: rgba(255,255,255,0.2); color: #FFF; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
 
-/* Formulários e campos de entrada */
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; align-items: center; }
-label { font-size: 11px; font-weight: 600; color: var(--text-main); }
-input, select { width: 100%; height: 30px; padding: 2px 8px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--input-bg); font-size: 12px; color: var(--text-main); transition: 0.2s; }
-input:focus, select:focus { outline: none; border-color: var(--copel-orange); background: #FFF; box-shadow: 0 0 0 2px rgba(255,102,0,0.1); }
-.info { margin-top: 10px; padding: 6px 10px; background: #E8F8F0; color: #0E8F42; border: 1px solid #C3E6D2; border-radius: 4px; font-size: 10px; font-weight: 700; }
+        /* Layout e grid principal */
+        .container { width: 96%; max-width: 1400px; margin: 12px auto; padding-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .card { background: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }
+        .card-header { background: var(--card-bg); color: var(--text-main); padding: 10px 14px; font-size: 12px; font-weight: 700; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; }
+        .card-header::before { content: ''; width: 3px; height: 12px; background: var(--copel-orange); border-radius: 2px; }
+        .card-body { padding: 12px 14px; }
 
-/* Seções e campos condicionais */
-.dynamic-section { display: flex; flex-direction: column; gap: 10px; }
-.campo-condicional { display: none; flex-direction: column; gap: 4px; }
-.campo-condicional.ativo { display: flex !important; }
+        /* Formulários e campos de entrada */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; align-items: center; }
+        label { font-size: 11px; font-weight: 600; color: var(--text-main); }
+        input, select { width: 100%; height: 30px; padding: 2px 8px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--input-bg); font-size: 12px; color: var(--text-main); transition: 0.2s; }
+        input:focus, select:focus { outline: none; border-color: var(--copel-orange); background: #FFF; box-shadow: 0 0 0 2px rgba(255,102,0,0.1); }
+        .info { margin-top: 10px; padding: 6px 10px; background: #E8F8F0; color: #0E8F42; border: 1px solid #C3E6D2; border-radius: 4px; font-size: 10px; font-weight: 700; }
 
-/* Bloco do Parecer Final e botões de ação */
-.parecer { background: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; }
-.parecer-header { padding: 10px 14px; font-size: 12px; font-weight: 700; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; }
-.parecer-header::before { content: ''; width: 3px; height: 12px; background: var(--copel-orange); border-radius: 2px; }
-textarea { width: 100%; height: 170px; border: none; resize: vertical; padding: 12px; background: #FAFCFE; font-family: 'Consolas', monospace; font-size: 12px; color: #2C3E50; }
-textarea:focus { outline: none; }
-.botoes { padding: 10px 14px; background: #F9FAFC; border-top: 1px solid var(--border-color); display: flex; gap: 8px; }
+        /* Seções e campos condicionais */
+        .dynamic-section { display: flex; flex-direction: column; gap: 10px; }
+        .campo-condicional { display: none; flex-direction: column; gap: 4px; }
+        .campo-condicional.ativo { display: flex !important; }
 
-/* Estilização dos botões */
-button { background: var(--copel-orange); color: white; border: none; border-radius: 4px; padding: 6px 14px; cursor: pointer; font-weight: 600; font-size: 11px; transition: 0.2s; }
-button:hover { background: var(--copel-orange-dark); }
-button.btn-secondary { background: #6C7A89; }
-button.btn-secondary:hover { background: #5A6573; }
-button.btn-danger { background: #E74C3C; }
-button.btn-danger:hover { background: #C0392B; }
+        /* Bloco do Parecer Final e botões de ação */
+        .parecer { background: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color); overflow: hidden; }
+        .parecer-header { padding: 10px 14px; font-size: 12px; font-weight: 700; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; }
+        .parecer-header::before { content: ''; width: 3px; height: 12px; background: var(--copel-orange); border-radius: 2px; }
+        textarea { width: 100%; height: 170px; border: none; resize: vertical; padding: 12px; background: #FAFCFE; font-family: 'Consolas', monospace; font-size: 12px; color: #2C3E50; }
+        textarea:focus { outline: none; }
+        .botoes { padding: 10px 14px; background: #F9FAFC; border-top: 1px solid var(--border-color); display: flex; gap: 8px; }
 
-.footer-credits { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 15px; }
-@media(max-width: 900px) { .grid, .form-grid { grid-template-columns: 1fr; } }
-</style>
+        /* Estilização dos botões */
+        button { background: var(--copel-orange); color: white; border: none; border-radius: 4px; padding: 6px 14px; cursor: pointer; font-weight: 600; font-size: 11px; transition: 0.2s; }
+        button:hover { background: var(--copel-orange-dark); }
+        button.btn-secondary { background: #6C7A89; }
+        button.btn-secondary:hover { background: #5A6573; }
+        button.btn-danger { background: #E74C3C; }
+        button.btn-danger:hover { background: #C0392B; }
+
+        .footer-credits { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 15px; }
+        @media(max-width: 900px) { .grid, .form-grid { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
 
@@ -99,7 +99,6 @@ button.btn-danger:hover { background: #C0392B; }
                         <option value="" disabled selected>Selecione...</option>
                         <option value="3X300A">3X300A</option>
                         <option value="3X400A">3X400A</option>
-                        <option value="3X500A">3X500A</option>
                         <option value="3X500A">3X500A</option>
                         <option value="3X600A">3X600A</option>
                         <option value="3X700A">3X700A</option>
@@ -275,6 +274,7 @@ function limparDados() {
 // Inicializa o estado visual correto ao carregar a página
 atualizarCampos();
 </script>
+
 <!-- Vercel Web Analytics Script -->
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
