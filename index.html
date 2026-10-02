@@ -81,13 +81,15 @@
             max-width: 1400px;
             margin: 12px auto;
             padding-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 12px;
         }
 
         .card {
@@ -110,13 +112,13 @@
             gap: 8px;
         }
 
-            .card-header::before {
-                content: '';
-                width: 3px;
-                height: 12px;
-                background: var(--copel-orange);
-                border-radius: 2px;
-            }
+        .card-header::before {
+            content: '';
+            width: 3px;
+            height: 12px;
+            background: var(--copel-orange);
+            border-radius: 2px;
+        }
 
         .card-body {
             padding: 12px 14px;
@@ -148,12 +150,12 @@
             transition: 0.2s;
         }
 
-            input:focus, select:focus {
-                outline: none;
-                border-color: var(--copel-orange);
-                background: #FFF;
-                box-shadow: 0 0 0 2px rgba(255,102,0,0.1);
-            }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--copel-orange);
+            background: #FFF;
+            box-shadow: 0 0 0 2px rgba(255,102,0,0.1);
+        }
 
         .info {
             margin-top: 10px;
@@ -179,11 +181,17 @@
             gap: 4px;
         }
 
-            .campo-condicional.ativo {
-                display: flex !important;
-            }
+        .campo-condicional.ativo {
+            display: flex !important;
+        }
 
-        /* Bloco do Parecer Final e botões de ação */
+        .campo-fixo-adicional {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* Bloco dos Pareceres e botões de ação */
         .parecer {
             background: var(--card-bg);
             border-radius: 6px;
@@ -201,13 +209,13 @@
             gap: 8px;
         }
 
-            .parecer-header::before {
-                content: '';
-                width: 3px;
-                height: 12px;
-                background: var(--copel-orange);
-                border-radius: 2px;
-            }
+        .parecer-header::before {
+            content: '';
+            width: 3px;
+            height: 12px;
+            background: var(--copel-orange);
+            border-radius: 2px;
+        }
 
         textarea {
             width: 100%;
@@ -221,9 +229,17 @@
             color: #2C3E50;
         }
 
-            textarea:focus {
-                outline: none;
-            }
+        textarea.textarea-curto {
+            height: 60px;
+        }
+
+        textarea.textarea-medio {
+            height: 90px;
+        }
+
+        textarea:focus {
+            outline: none;
+        }
 
         .botoes {
             padding: 10px 14px;
@@ -246,25 +262,50 @@
             transition: 0.2s;
         }
 
-            button:hover {
-                background: var(--copel-orange-dark);
-            }
+        button:hover {
+            background: var(--copel-orange-dark);
+        }
 
-            button.btn-secondary {
-                background: #6C7A89;
-            }
+        button.btn-secondary {
+            background: #6C7A89;
+        }
 
-                button.btn-secondary:hover {
-                    background: #5A6573;
-                }
+        button.btn-secondary:hover {
+            background: #5A6573;
+        }
 
-            button.btn-danger {
-                background: #E74C3C;
-            }
+        button.btn-danger {
+            background: #E74C3C;
+        }
 
-                button.btn-danger:hover {
-                    background: #C0392B;
-                }
+        button.btn-danger:hover {
+            background: #C0392B;
+        }
+
+        /* Toast Popup Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2C3E50;
+            color: #FFF;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            z-index: 1000;
+            border-left: 4px solid var(--copel-orange);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .footer-credits {
             text-align: center;
@@ -342,11 +383,13 @@
                 <div class="card-header">PARÂMETROS ADICIONAIS</div>
                 <div class="card-body">
                     <div class="dynamic-section">
+                        <!-- 1. Campo UC Fat B -->
                         <div id="linhaUC" class="campo-condicional">
                             <label>Número da UC Fat B Existente</label>
                             <input id="uc" placeholder="Informe a UC">
                         </div>
 
+                        <!-- 2. Campo Bomba de Incêndio -->
                         <div id="linhaBomba" class="campo-condicional">
                             <label>Disjuntor da medição para bomba de incêndio</label>
                             <select id="disjuntorBomba">
@@ -363,17 +406,19 @@
                             </select>
                         </div>
 
-                        <div id="placeholderAdicionais" style="color: var(--text-muted); font-size: 11px; text-align: center; padding: 15px 0;">
-                            Nenhum parâmetro adicional ativo no momento.
+                        <!-- 3. Campo Número da I57 -->
+                        <div class="campo-fixo-adicional">
+                            <label>Número da I57</label>
+                            <input id="numeroI57" placeholder="Ex: 123456789" oninput="atualizarTextosI57()">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bloco de Saída do Parecer -->
+        <!-- Bloco de Saída do Parecer Principal (Renomeado) -->
         <div class="parecer">
-            <div class="parecer-header">PARECER FINAL NA APROVAÇÃO DA SS I20</div>
+            <div class="parecer-header">TEXTO PARA A GERAÇÃO DA SS I57</div>
             <textarea id="resultado" placeholder="O texto gerado do parecer aparecerá aqui..."></textarea>
             <div class="botoes">
                 <button onclick="gerarParecer()">Gerar Parecer</button>
@@ -382,10 +427,41 @@
             </div>
         </div>
 
+        <!-- Card de Saída para Aprovação da SS I20 -->
+        <div class="parecer">
+            <div class="parecer-header">TEXTO PARA APROVAÇÃO DA SS I20</div>
+            <textarea id="resultadoI57" class="textarea-curto" readonly></textarea>
+            <div class="botoes">
+                <button class="btn-secondary" onclick="copiarTextoI57()">Copiar Texto</button>
+            </div>
+        </div>
+
+        <!-- Novo Card no Final: Carta de Aprovação do Projeto no PEW -->
+        <div class="parecer">
+            <div class="parecer-header">TEXTO PARA A CARTA DE APROVAÇÃO DO PROJETO NO PEW</div>
+            <textarea id="resultadoCartaPEW" class="textarea-medio" readonly></textarea>
+            <div class="botoes">
+                <button class="btn-secondary" onclick="copiarCartaPEW()">Copiar Texto</button>
+            </div>
+        </div>
+
         <div class="footer-credits">Desenvolvido por Jose Eduardo Silva Dias - Registro: 51407 - Análise de Projetos</div>
     </div>
 
+    <!-- Toast de Notificação sem botão OK -->
+    <div id="toastNotification" class="toast">Texto copiado para a área de transferência</div>
+
     <script>
+        // Função para mostrar notificação temporária sem travar o usuário
+        function mostrarToast(mensagem) {
+            const toast = document.getElementById("toastNotification");
+            if (mensagem) toast.innerText = mensagem;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 2500);
+        }
+
         // Alterna a visibilidade dos campos extras com base nas seleções principais
         function atualizarCampos() {
             const trocaSim = document.getElementById("trocaPadrao").value === "SIM";
@@ -396,11 +472,24 @@
 
             document.getElementById("linhaBomba").classList.toggle("ativo", bombaSim);
             if (!bombaSim) document.getElementById("disjuntorBomba").selectedIndex = 0;
-
-            document.getElementById("placeholderAdicionais").style.display = (trocaSim || bombaSim) ? "none" : "block";
         }
 
-        // Valida campos obrigatórios e monta o texto final do parecer
+        // Atualiza dinamicamente os textos vinculados ao campo "Número da I57"
+        function atualizarTextosI57() {
+            const i57Valor = document.getElementById("numeroI57").value.trim();
+
+            // 1. Texto para Aprovação da SS I20
+            const textoPrefixoAprovacao = "Projeto elétrico aprovado no sistema PEW - SS I57";
+            document.getElementById("resultadoI57").value = i57Valor !== "" 
+                ? `${textoPrefixoAprovacao} ${i57Valor}` 
+                : textoPrefixoAprovacao;
+
+            // 2. Texto para Carta de Aprovação do Projeto no PEW
+            const protocoloTexto = i57Valor !== "" ? `protocolo de atendimento ${i57Valor}` : "protocolo de atendimento";
+            document.getElementById("resultadoCartaPEW").value = `O protocolo de redes ainda não foi emitido. Foi gerado o ${protocoloTexto} para a nossa equipe, que entrará em contato com o titular da unidade consumidora e, se necessário, com o projetista responsável em até 5 dias úteis para solicitar a documentação comercial pertinente. O protocolo de rede será emitido após o cumprimento desses requisitos comerciais`;
+        }
+
+        // Valida campos obrigatórios e monta o texto do Parecer para Geração da SS I57
         function gerarParecer() {
             const ids = [
                 { id: "disjuntor", msg: "Selecione a corrente do disjuntor geral." },
@@ -452,7 +541,8 @@
                 ? `Conforme projeto elétrico ${pew}, favor gerar TROCA DE PADRÃO para a UC: ${uc}, considerando as seguintes características:`
                 : `Conforme projeto elétrico ${pew}, favor gerar PEDIDO DE LIGAÇÃO, considerando as seguintes características:`;
 
-            texto += `\n\n- Cidade: ${cidade};\n- Endereço: ${logradouro}, ${numero};\n- Complemento da UC: PE ${pewFormatado};\n- Grupo de Tensão: B;\n- Disjuntor: ${disj};\n- Declaração de Carga: Qtde = 1 em 4) Disjuntor > Disjuntor Individual > Trifásico Maior que 200A;`;
+            // Linha extra "- VER ANEXOS;" no final
+            texto += `\n\n- Cidade: ${cidade};\n- Endereço: ${logradouro}, ${numero};\n- Complemento da UC: PE ${pewFormatado};\n- Grupo de Tensão: B;\n- Disjuntor: ${disj};\n- Declaração de Carga: Qtde = 1 em 4) Disjuntor > Disjuntor Individual > Trifásico Maior que 200A;\n- VER ANEXOS;`;
 
             // Acrescenta trecho da bomba de incêndio se selecionado SIM
             if (bomba === "SIM") {
@@ -462,7 +552,7 @@
             document.getElementById("resultado").value = texto;
         }
 
-        // Copia o conteúdo gerado para a área de transferência
+        // Copia o conteúdo gerado do parecer com toast automático
         function copiarParecer() {
             const textarea = document.getElementById("resultado");
             if (!textarea.value) {
@@ -470,7 +560,29 @@
                 return;
             }
             navigator.clipboard.writeText(textarea.value);
-            alert("Parecer copiado para a área de transferência.");
+            mostrarToast("Texto copiado para a área de transferência.");
+        }
+
+        // Copia o texto de Aprovação SS I20 com toast automático
+        function copiarTextoI57() {
+            const textarea = document.getElementById("resultadoI57");
+            if (!textarea.value) {
+                alert("Nenhum texto para copiar.");
+                return;
+            }
+            navigator.clipboard.writeText(textarea.value);
+            mostrarToast("Texto de aprovação copiado para a área de transferência.");
+        }
+
+        // Copia o texto da Carta de Aprovação do Projeto no PEW com toast automático
+        function copiarCartaPEW() {
+            const textarea = document.getElementById("resultadoCartaPEW");
+            if (!textarea.value) {
+                alert("Nenhum texto para copiar.");
+                return;
+            }
+            navigator.clipboard.writeText(textarea.value);
+            mostrarToast("Texto da carta copiado para a área de transferência.");
         }
 
         // Reseta todos os campos do formulário para o padrão inicial
@@ -479,10 +591,12 @@
             document.querySelectorAll("select").forEach(select => select.selectedIndex = 0);
             document.getElementById("resultado").value = "";
             atualizarCampos();
+            atualizarTextosI57();
         }
 
-        // Inicializa o estado visual correto ao carregar a página
+        // Inicializa o estado visual ao carregar a página
         atualizarCampos();
+        atualizarTextosI57();
     </script>
 
     <!-- Vercel Web Analytics Script -->
