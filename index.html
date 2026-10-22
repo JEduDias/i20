@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gerador de Parecer Final I20 | COPEL</title>
+    <title>Gerador de Parecer Final I20 & I57 | COPEL</title>
 
     <!-- ÍCONE DA ABA E BARRA DE FAVORITOS (SVG EMBUTIDO - RAIO LARANJA) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF6600'><path d='M11 15H6l7-14v8h5l-7 14v-8z'/></svg>">
@@ -19,6 +19,10 @@
             --text-muted: #7F8C8D;
             --border-color: #DCE1E5;
             --input-bg: #FAFCFE;
+            --yellow-highlight: #FFFDE7;
+            --yellow-border: #FBC02D;
+            --blue-highlight: #EBF8FF;
+            --blue-border: #3182CE;
         }
 
         * {
@@ -83,13 +87,13 @@
             padding-bottom: 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 14px;
         }
 
         .card {
@@ -98,6 +102,16 @@
             border: 1px solid var(--border-color);
             overflow: hidden;
             box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+        }
+
+        /* Destaques Didáticos */
+        .card-step-1 {
+            border: 2px solid var(--yellow-border);
+        }
+
+        .card-step-2 {
+            border: 2px solid var(--blue-border);
+            background: #FAFCFF;
         }
 
         .card-header {
@@ -114,15 +128,32 @@
 
         .card-header::before {
             content: '';
-            width: 3px;
-            height: 12px;
+            width: 4px;
+            height: 14px;
             background: var(--copel-orange);
             border-radius: 2px;
         }
 
+        .header-step-1::before { background: #F59E0B; }
+        .header-step-2::before { background: var(--blue-border); }
+
         .card-body {
             padding: 12px 14px;
         }
+
+        /* Indicador de Passo Didático */
+        .step-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .step-tag-1 { background: #FEF3C7; color: #92400E; }
+        .step-tag-2 { background: #E0F2FE; color: #075985; }
 
         /* Formulários e campos de entrada */
         .form-grid {
@@ -150,6 +181,20 @@
             transition: 0.2s;
         }
 
+        /* Estilo Amarelo para os Dados da SS I57 */
+        .in-yellow {
+            background-color: var(--yellow-highlight) !important;
+            border-color: #FCD34D !important;
+        }
+
+        /* Estilo Azul para o Protocolo da I57 */
+        .in-blue {
+            background-color: var(--blue-highlight) !important;
+            border-color: #93C5FD !important;
+            font-weight: 700;
+            font-size: 13px !important;
+        }
+
         input:focus, select:focus {
             outline: none;
             border-color: var(--copel-orange);
@@ -166,6 +211,18 @@
             border-radius: 4px;
             font-size: 10px;
             font-weight: 700;
+        }
+
+        .info-blue {
+            margin-top: 8px;
+            padding: 8px 10px;
+            background: #EFF6FF;
+            color: #1E40AF;
+            border: 1px solid #BFDBFE;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.3;
         }
 
         /* Seções e campos condicionais */
@@ -219,7 +276,7 @@
 
         textarea {
             width: 100%;
-            height: 170px;
+            height: 160px;
             border: none;
             resize: vertical;
             padding: 12px;
@@ -230,11 +287,11 @@
         }
 
         textarea.textarea-curto {
-            height: 60px;
+            height: 55px;
         }
 
         textarea.textarea-medio {
-            height: 90px;
+            height: 100px;
         }
 
         textarea:focus {
@@ -327,26 +384,27 @@
     <header class="topo">
         <div class="topo-brand">
             <img src="logo.png" class="logo" alt="Logo Copel" onerror="this.style.display='none'">
-            <div class="titulo">Gerador de Parecer Final I20</div>
+            <div class="titulo">Gerador de Parecer Final I20 & I57</div>
         </div>
         <div class="badge-sistema">ANÁLISE DE PROJETOS DA MEDIÇÃO</div>
     </header>
 
     <div class="container">
         <div class="grid">
-            <!-- Card 1: Dados Principais do Projeto -->
-            <div class="card">
-                <div class="card-header">DADOS PARA PREENCHIMENTO DO PROJETO</div>
+            <!-- Card 1: Dados Principais do Projeto (ETAPA 1 - Amarelo) -->
+            <div class="card card-step-1">
+                <div class="card-header header-step-1">ETAPA 1: DADOS PARA GERAR A SS I57</div>
                 <div class="card-body">
+                    <span class="step-tag step-tag-1">Passo 1: Preencha para montar a I57</span>
                     <div class="form-grid">
                         <label>Há UC Fat B para troca de padrão</label>
-                        <select id="trocaPadrao" onchange="atualizarCampos()">
+                        <select id="trocaPadrao" class="in-yellow" onchange="atualizarCampos()">
                             <option value="NÃO">NÃO</option>
                             <option value="SIM">SIM</option>
                         </select>
 
                         <label>Corrente disjuntor geral</label>
-                        <select id="disjuntor">
+                        <select id="disjuntor" class="in-yellow">
                             <option value="" disabled selected>Selecione...</option>
                             <option value="3X300A">3X300A</option>
                             <option value="3X400A">3X400A</option>
@@ -357,42 +415,42 @@
                         </select>
 
                         <label>Medição para bomba de incêndio</label>
-                        <select id="bomba" onchange="atualizarCampos()">
+                        <select id="bomba" class="in-yellow" onchange="atualizarCampos()">
                             <option value="NÃO">NÃO</option>
                             <option value="SIM">SIM</option>
                         </select>
 
                         <label>Número do Projeto PEW</label>
-                        <input id="pew" placeholder="Ex: 00001/2017">
+                        <input id="pew" class="in-yellow" placeholder="Ex: 00001/2017">
 
                         <label>Município</label>
-                        <input id="cidade" placeholder="Ex: Curitiba">
+                        <input id="cidade" class="in-yellow" placeholder="Ex: Curitiba">
 
                         <label>Logradouro</label>
-                        <input id="logradouro" placeholder="Ex: Rua Izidoro Biazero">
+                        <input id="logradouro" class="in-yellow" placeholder="Ex: Rua Izidoro Biazero">
 
                         <label>Número / Complemento</label>
-                        <input id="numero" placeholder="Ex: 158">
+                        <input id="numero" class="in-yellow" placeholder="Ex: 158">
                     </div>
                     <div class="info">USAR PARA CLIENTE ÚNICO ATENDIDO EM BT COM MEDIÇÃO INDIRETA</div>
                 </div>
             </div>
 
-            <!-- Card 2: Parâmetros Dinâmicos / Condicionais -->
+            <!-- Card 2: Parâmetros Adicionais + ETAPA 2 (Azul) -->
             <div class="card">
-                <div class="card-header">PARÂMETROS ADICIONAIS</div>
+                <div class="card-header">PARÂMETROS ADICIONAIS & ETAPA 2</div>
                 <div class="card-body">
                     <div class="dynamic-section">
                         <!-- 1. Campo UC Fat B -->
                         <div id="linhaUC" class="campo-condicional">
                             <label>Número da UC Fat B Existente</label>
-                            <input id="uc" placeholder="Informe a UC">
+                            <input id="uc" class="in-yellow" placeholder="Informe a UC">
                         </div>
 
                         <!-- 2. Campo Bomba de Incêndio -->
                         <div id="linhaBomba" class="campo-condicional">
                             <label>Disjuntor da medição para bomba de incêndio</label>
-                            <select id="disjuntorBomba">
+                            <select id="disjuntorBomba" class="in-yellow">
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="3X50A">3X50A</option>
                                 <option value="3X63A">3X63A</option>
@@ -406,42 +464,48 @@
                             </select>
                         </div>
 
-                        <!-- 3. Campo Número da I57 -->
-                        <div class="campo-fixo-adicional">
-                            <label>Número da I57</label>
-                            <input id="numeroI57" placeholder="Ex: 123456789" oninput="atualizarTextosI57()">
+                        <!-- 3. Campo Número da I57 (ETAPA 2 - Azul) -->
+                        <div class="card card-step-2" style="padding: 10px; margin-top: 5px;">
+                            <span class="step-tag step-tag-2">ETAPA 2: APÓS GERAR A SS I57</span>
+                            <div class="campo-fixo-adicional">
+                                <label style="color: #075985;">Digite aqui o número do Protocolo da SS I57 gerada:</label>
+                                <input id="numeroI57" class="in-blue" placeholder="Ex: 123456789" oninput="atualizarTextosI57()">
+                            </div>
+                            <div class="info-blue">
+                                💡 <strong>Dica:</strong> Este protocolo preencherá automaticamente o texto de aprovação da SS I20 e a Carta do PEW abaixo.
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bloco de Saída do Parecer Principal (Renomeado) -->
-        <div class="parecer">
-            <div class="parecer-header">TEXTO PARA A GERAÇÃO DA SS I57</div>
-            <textarea id="resultado" placeholder="O texto gerado do parecer aparecerá aqui..."></textarea>
+        <!-- Bloco de Saída: Gerar I57 (ETAPA 1) -->
+        <div class="parecer card-step-1">
+            <div class="parecer-header header-step-1">1. TEXTO PARA A GERAÇÃO DA SS I57</div>
+            <textarea id="resultado" placeholder="Preencha a Etapa 1 acima e clique em 'Gerar Parecer para I57'..."></textarea>
             <div class="botoes">
-                <button onclick="gerarParecer()">Gerar Parecer</button>
-                <button class="btn-secondary" onclick="copiarParecer()">Copiar Texto</button>
+                <button onclick="gerarParecer()">Gerar Parecer para I57</button>
+                <button class="btn-secondary" onclick="copiarParecer()">Copiar Texto para Gerar a SS I57</button>
                 <button class="btn-danger" onclick="limparDados()">Limpar Campos</button>
             </div>
         </div>
 
-        <!-- Card de Saída para Aprovação da SS I20 -->
-        <div class="parecer">
-            <div class="parecer-header">TEXTO PARA APROVAÇÃO DA SS I20</div>
+        <!-- Card de Saída: Aprovação da SS I20 (ETAPA 2) -->
+        <div class="parecer card-step-2">
+            <div class="parecer-header header-step-2">2. TEXTO PARA APROVAÇÃO DA SS I20</div>
             <textarea id="resultadoI57" class="textarea-curto" readonly></textarea>
             <div class="botoes">
-                <button class="btn-secondary" onclick="copiarTextoI57()">Copiar Texto</button>
+                <button class="btn-secondary" onclick="copiarTextoI57()">Copiar Texto de Aprovação I20</button>
             </div>
         </div>
 
-        <!-- Novo Card no Final: Carta de Aprovação do Projeto no PEW -->
-        <div class="parecer">
-            <div class="parecer-header">TEXTO PARA A CARTA DE APROVAÇÃO DO PROJETO NO PEW</div>
+        <!-- Card de Saída: Carta PEW (ETAPA 2) -->
+        <div class="parecer card-step-2">
+            <div class="parecer-header header-step-2">3. TEXTO PARA A CARTA DE APROVAÇÃO DO PROJETO NO PEW</div>
             <textarea id="resultadoCartaPEW" class="textarea-medio" readonly></textarea>
             <div class="botoes">
-                <button class="btn-secondary" onclick="copiarCartaPEW()">Copiar Texto</button>
+                <button class="btn-secondary" onclick="copiarCartaPEW()">Copiar Carta para PEW</button>
             </div>
         </div>
 
@@ -484,9 +548,10 @@
                 ? `${textoPrefixoAprovacao} ${i57Valor}` 
                 : textoPrefixoAprovacao;
 
-            // 2. Texto para Carta de Aprovação do Projeto no PEW
-            const protocoloTexto = i57Valor !== "" ? `protocolo de atendimento ${i57Valor}` : "protocolo de atendimento";
-            document.getElementById("resultadoCartaPEW").value = `O protocolo de redes ainda não foi emitido. Foi gerado o ${protocoloTexto} para a nossa equipe, que entrará em contato com o titular da unidade consumidora e, se necessário, com o projetista responsável em até 5 dias úteis para solicitar a documentação comercial pertinente. O protocolo de rede será emitido após o cumprimento desses requisitos comerciais`;
+            // 2. Novo Texto para Carta de Aprovação do Projeto no PEW
+            const protocoloTexto = i57Valor !== "" ? i57Valor : "XXXXXXXXXXXXXX";
+            
+            document.getElementById("resultadoCartaPEW").value = `O protocolo de redes ainda não foi emitido. Foi gerado o protocolo de atendimento ${protocoloTexto}, encaminhado à equipe de atendimento comercial, que entrará em contato em até 5 dias úteis para emissão do protocolo de redes/ligação.\nCaso a solicitação não prossiga neste momento, poderá ser retomada com antecedência mínima de 6 meses da data prevista para ligação, mediante a informação deste protocolo nos canais de atendimento do Grupo B.`;
         }
 
         // Valida campos obrigatórios e monta o texto do Parecer para Geração da SS I57
@@ -560,7 +625,7 @@
                 return;
             }
             navigator.clipboard.writeText(textarea.value);
-            mostrarToast("Texto copiado para a área de transferência.");
+            mostrarToast("Texto para geração da I57 copiado!");
         }
 
         // Copia o texto de Aprovação SS I20 com toast automático
@@ -571,7 +636,7 @@
                 return;
             }
             navigator.clipboard.writeText(textarea.value);
-            mostrarToast("Texto de aprovação copiado para a área de transferência.");
+            mostrarToast("Texto de aprovação I20 copiado!");
         }
 
         // Copia o texto da Carta de Aprovação do Projeto no PEW com toast automático
@@ -582,7 +647,7 @@
                 return;
             }
             navigator.clipboard.writeText(textarea.value);
-            mostrarToast("Texto da carta copiado para a área de transferência.");
+            mostrarToast("Texto da Carta PEW copiado!");
         }
 
         // Reseta todos os campos do formulário para o padrão inicial
