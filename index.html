@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,24 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gerador de Parecer Final I20 & I57 | COPEL</title>
 
-    <!-- ÍCONE DA ABA E BARRA DE FAVORITOS (SVG EMBUTIDO - RAIO LARANJA) -->
+    <!-- ÍCONE DA ABA (SVG EMBUTIDO - RAIO LARANJA) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF6600'><path d='M11 15H6l7-14v8h5l-7 14v-8z'/></svg>">
 
+    <!-- FONTE GOOGLE URBANIST / INTER PARA VISUAL MODERNO -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* Variáveis de cores padrão da identidade visual */
         :root {
             --copel-orange: #FF6600;
             --copel-orange-dark: #E65C00;
-            --bg-color: #F4F6F9;
+            --copel-orange-light: #FFF5EE;
+            --bg-color: #F8FAFC;
             --card-bg: #FFFFFF;
-            --text-main: #2C3E50;
-            --text-muted: #7F8C8D;
-            --border-color: #DCE1E5;
-            --input-bg: #FAFCFE;
-            --yellow-highlight: #FFFDE7;
-            --yellow-border: #FBC02D;
-            --blue-highlight: #EBF8FF;
-            --blue-border: #3182CE;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --input-bg: #FFFFFF;
+            --yellow-highlight: #FEFCE8;
+            --yellow-border: #F59E0B;
+            --blue-highlight: #F0F9FF;
+            --blue-border: #0284C7;
+            --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+            --shadow-hover: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+            --radius-card: 12px;
+            --radius-btn: 8px;
         }
 
         * {
@@ -32,210 +42,231 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.4;
+            line-height: 1.5;
+            padding-bottom: 40px;
         }
 
         /* Topo e cabeçalho do sistema */
         .topo {
-            background: var(--copel-orange);
-            height: 65px;
+            background: linear-gradient(135deg, #FF6600 0%, #E65C00 100%);
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            padding: 0 32px;
+            box-shadow: 0 4px 14px rgba(255, 102, 0, 0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .topo-brand {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 16px;
         }
 
         .logo {
-            height: 38px;
+            height: 40px;
             width: auto;
             object-fit: contain;
         }
 
         .titulo {
             color: #FFF;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
-            border-left: 3px solid rgba(255,255,255,0.6);
-            padding-left: 12px;
+            border-left: 2px solid rgba(255, 255, 255, 0.35);
+            padding-left: 14px;
+            letter-spacing: -0.02em;
         }
 
         .badge-sistema {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(8px);
             color: #FFF;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 10px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
-        /* Layout e grid principal */
+        /* Layout e grid principal estilo Dashboard */
         .container {
-            width: 96%;
-            max-width: 1400px;
-            margin: 12px auto;
-            padding-bottom: 20px;
+            width: 95%;
+            max-width: 1440px;
+            margin: 24px auto 0;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 20px;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 20px;
         }
 
         .card {
             background: var(--card-bg);
-            border-radius: 6px;
+            border-radius: var(--radius-card);
             border: 1px solid var(--border-color);
             overflow: hidden;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+            box-shadow: var(--shadow-card);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        /* Destaques Didáticos */
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Destaques Didáticos dos Cards */
         .card-step-1 {
-            border: 2px solid var(--yellow-border);
+            border-top: 4px solid var(--yellow-border);
         }
 
         .card-step-2 {
-            border: 2px solid var(--blue-border);
-            background: #FAFCFF;
+            border-top: 4px solid var(--blue-border);
         }
 
         .card-header {
-            background: var(--card-bg);
-            color: var(--text-main);
-            padding: 10px 14px;
-            font-size: 12px;
-            font-weight: 700;
+            background: #FFFFFF;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
-        .card-header::before {
+        .card-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #0F172A;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .card-header-title::before {
             content: '';
             width: 4px;
-            height: 14px;
+            height: 16px;
             background: var(--copel-orange);
-            border-radius: 2px;
+            border-radius: 4px;
         }
 
-        .header-step-1::before { background: #F59E0B; }
-        .header-step-2::before { background: var(--blue-border); }
+        .header-step-1 .card-header-title::before { background: var(--yellow-border); }
+        .header-step-2 .card-header-title::before { background: var(--blue-border); }
 
         .card-body {
-            padding: 12px 14px;
+            padding: 20px;
         }
 
         /* Indicador de Passo Didático */
         .step-tag {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 800;
-            margin-bottom: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 16px;
             text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
         .step-tag-1 { background: #FEF3C7; color: #92400E; }
-        .step-tag-2 { background: #E0F2FE; color: #075985; }
+        .step-tag-2 { background: #E0F2FE; color: #0369A1; }
 
         /* Formulários e campos de entrada */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px 12px;
+            gap: 14px 16px;
             align-items: center;
         }
 
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
         label {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--text-main);
+            color: #334155;
         }
 
         input, select {
             width: 100%;
-            height: 30px;
-            padding: 2px 8px;
+            height: 38px;
+            padding: 0 12px;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 8px;
             background: var(--input-bg);
-            font-size: 12px;
+            font-family: inherit;
+            font-size: 13px;
             color: var(--text-main);
-            transition: 0.2s;
+            transition: all 0.2s;
         }
 
-        /* Estilo Amarelo para os Dados da SS I57 */
+        /* Estilo Amarelo Suave para Dados da SS I57 */
         .in-yellow {
             background-color: var(--yellow-highlight) !important;
-            border-color: #FCD34D !important;
+            border-color: #FDE68A !important;
         }
 
-        /* Estilo Azul para o Protocolo da I57 */
+        /* Estilo Azul Suave para o Protocolo da I57 */
         .in-blue {
             background-color: var(--blue-highlight) !important;
-            border-color: #93C5FD !important;
+            border-color: #BAE6FD !important;
             font-weight: 700;
-            font-size: 13px !important;
+            font-size: 14px !important;
+            color: #0369A1 !important;
         }
 
         input:focus, select:focus {
             outline: none;
-            border-color: var(--copel-orange);
-            background: #FFF;
-            box-shadow: 0 0 0 2px rgba(255,102,0,0.1);
-        }
-
-        .info {
-            margin-top: 10px;
-            padding: 6px 10px;
-            background: #E8F8F0;
-            color: #0E8F42;
-            border: 1px solid #C3E6D2;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 700;
+            border-color: var(--copel-orange) !important;
+            background: #FFFFFF !important;
+            box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
         }
 
         .info-blue {
-            margin-top: 8px;
-            padding: 8px 10px;
-            background: #EFF6FF;
-            color: #1E40AF;
-            border: 1px solid #BFDBFE;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 600;
-            line-height: 1.3;
+            margin-top: 14px;
+            padding: 12px 14px;
+            background: #F0F9FF;
+            color: #0369A1;
+            border: 1px solid #E0F2FE;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.4;
         }
 
         /* Seções e campos condicionais */
         .dynamic-section {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .campo-condicional {
             display: none;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .campo-condicional.ativo {
@@ -245,33 +276,16 @@
         .campo-fixo-adicional {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
-        /* Bloco dos Pareceres e botões de ação */
+        /* Bloco dos Pareceres e Áreas de Texto */
         .parecer {
             background: var(--card-bg);
-            border-radius: 6px;
+            border-radius: var(--radius-card);
             border: 1px solid var(--border-color);
             overflow: hidden;
-        }
-
-        .parecer-header {
-            padding: 10px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .parecer-header::before {
-            content: '';
-            width: 3px;
-            height: 12px;
-            background: var(--copel-orange);
-            border-radius: 2px;
+            box-shadow: var(--shadow-card);
         }
 
         textarea {
@@ -279,84 +293,97 @@
             height: 160px;
             border: none;
             resize: vertical;
-            padding: 12px;
-            background: #FAFCFE;
-            font-family: 'Consolas', monospace;
-            font-size: 12px;
-            color: #2C3E50;
+            padding: 16px;
+            background: #FAFAFA;
+            font-family: 'Consolas', 'Fira Code', Monaco, monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #1E293B;
         }
 
         textarea.textarea-curto {
-            height: 55px;
+            height: 60px;
         }
 
         textarea.textarea-medio {
-            height: 100px;
+            height: 110px;
         }
 
         textarea:focus {
             outline: none;
+            background: #FFFFFF;
         }
 
-        .botoes {
-            padding: 10px 14px;
-            background: #F9FAFC;
-            border-top: 1px solid var(--border-color);
+        .botoes-topo {
             display: flex;
             gap: 8px;
         }
 
-        /* Estilização dos botões */
+        /* Botões Modernos */
         button {
             background: var(--copel-orange);
             color: white;
             border: none;
-            border-radius: 4px;
-            padding: 6px 14px;
+            border-radius: var(--radius-btn);
+            padding: 8px 14px;
             cursor: pointer;
+            font-family: inherit;
             font-weight: 600;
-            font-size: 11px;
-            transition: 0.2s;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
         button:hover {
             background: var(--copel-orange-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.2);
         }
 
         button.btn-secondary {
-            background: #6C7A89;
+            background: #0F172A;
+            color: #F8FAFC;
         }
 
         button.btn-secondary:hover {
-            background: #5A6573;
+            background: #1E293B;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
         }
 
         button.btn-danger {
-            background: #E74C3C;
+            background: #EF4444;
+            color: white;
         }
 
         button.btn-danger:hover {
-            background: #C0392B;
+            background: #DC2626;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
         }
 
         /* Toast Popup Notification */
         .toast {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #2C3E50;
+            bottom: 24px;
+            right: 24px;
+            background-color: #0F172A;
             color: #FFF;
-            padding: 12px 20px;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 14px 22px;
+            border-radius: 10px;
+            font-size: 13px;
             font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.3s ease, transform 0.3s ease;
             pointer-events: none;
             z-index: 1000;
             border-left: 4px solid var(--copel-orange);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .toast.show {
@@ -366,14 +393,21 @@
 
         .footer-credits {
             text-align: center;
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
-            margin-top: 15px;
+            margin-top: 24px;
+            font-weight: 500;
         }
 
-        @media(max-width: 900px) {
+        @media(max-width: 960px) {
             .grid, .form-grid {
                 grid-template-columns: 1fr;
+            }
+            .topo {
+                padding: 0 16px;
+            }
+            .container {
+                width: 92%;
             }
         }
     </style>
@@ -393,52 +427,69 @@
         <div class="grid">
             <!-- Card 1: Dados Principais do Projeto (ETAPA 1 - Amarelo) -->
             <div class="card card-step-1">
-                <div class="card-header header-step-1">ETAPA 1: DADOS PARA GERAR A SS I57</div>
+                <div class="card-header header-step-1">
+                    <div class="card-header-title">ETAPA 1: DADOS PARA GERAR A SS I57</div>
+                </div>
                 <div class="card-body">
-                    <span class="step-tag step-tag-1">Passo 1: Preencha para montar a I57</span>
+                    <span class="step-tag step-tag-1">📋 Passo 1: Preencha para montar a I57</span>
                     <div class="form-grid">
-                        <label>Há UC Fat B para troca de padrão</label>
-                        <select id="trocaPadrao" class="in-yellow" onchange="atualizarCampos()">
-                            <option value="NÃO">NÃO</option>
-                            <option value="SIM">SIM</option>
-                        </select>
+                        <div class="form-group">
+                            <label>Há UC Fat B para troca de padrão</label>
+                            <select id="trocaPadrao" class="in-yellow" onchange="atualizarCampos()">
+                                <option value="NÃO">NÃO</option>
+                                <option value="SIM">SIM</option>
+                            </select>
+                        </div>
 
-                        <label>Corrente disjuntor geral</label>
-                        <select id="disjuntor" class="in-yellow">
-                            <option value="" disabled selected>Selecione...</option>
-                            <option value="3X300A">3X300A</option>
-                            <option value="3X400A">3X400A</option>
-                            <option value="3X500A">3X500A</option>
-                            <option value="3X600A">3X600A</option>
-                            <option value="3X700A">3X700A</option>
-                            <option value="3X800A">3X800A</option>
-                        </select>
+                        <div class="form-group">
+                            <label>Corrente disjuntor geral</label>
+                            <select id="disjuntor" class="in-yellow">
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="3X300A">3X300A</option>
+                                <option value="3X400A">3X400A</option>
+                                <option value="3X500A">3X500A</option>
+                                <option value="3X600A">3X600A</option>
+                                <option value="3X700A">3X700A</option>
+                                <option value="3X800A">3X800A</option>
+                            </select>
+                        </div>
 
-                        <label>Medição para bomba de incêndio</label>
-                        <select id="bomba" class="in-yellow" onchange="atualizarCampos()">
-                            <option value="NÃO">NÃO</option>
-                            <option value="SIM">SIM</option>
-                        </select>
+                        <div class="form-group">
+                            <label>Medição para bomba de incêndio</label>
+                            <select id="bomba" class="in-yellow" onchange="atualizarCampos()">
+                                <option value="NÃO">NÃO</option>
+                                <option value="SIM">SIM</option>
+                            </select>
+                        </div>
 
-                        <label>Número do Projeto PEW</label>
-                        <input id="pew" class="in-yellow" placeholder="Ex: 00001/2017">
+                        <div class="form-group">
+                            <label>Número do Projeto PEW</label>
+                            <input id="pew" class="in-yellow" placeholder="Ex: 00001/2017">
+                        </div>
 
-                        <label>Município</label>
-                        <input id="cidade" class="in-yellow" placeholder="Ex: Curitiba">
+                        <div class="form-group">
+                            <label>Município</label>
+                            <input id="cidade" class="in-yellow" placeholder="Ex: Curitiba">
+                        </div>
 
-                        <label>Logradouro</label>
-                        <input id="logradouro" class="in-yellow" placeholder="Ex: Rua Izidoro Biazero">
+                        <div class="form-group">
+                            <label>Logradouro</label>
+                            <input id="logradouro" class="in-yellow" placeholder="Ex: Rua Izidoro Biazero">
+                        </div>
 
-                        <label>Número / Complemento</label>
-                        <input id="numero" class="in-yellow" placeholder="Ex: 158">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Número / Complemento</label>
+                            <input id="numero" class="in-yellow" placeholder="Ex: 158">
+                        </div>
                     </div>
-                    <div class="info">USAR PARA CLIENTE ÚNICO ATENDIDO EM BT COM MEDIÇÃO INDIRETA</div>
                 </div>
             </div>
 
             <!-- Card 2: Parâmetros Adicionais + ETAPA 2 (Azul) -->
-            <div class="card">
-                <div class="card-header">PARÂMETROS ADICIONAIS & ETAPA 2</div>
+            <div class="card card-step-2">
+                <div class="card-header header-step-2">
+                    <div class="card-header-title">PARÂMETROS ADICIONAIS & ETAPA 2</div>
+                </div>
                 <div class="card-body">
                     <div class="dynamic-section">
                         <!-- 1. Campo UC Fat B -->
@@ -464,12 +515,12 @@
                             </select>
                         </div>
 
-                        <!-- 3. Campo Número da I57 (ETAPA 2 - Azul) -->
-                        <div class="card card-step-2" style="padding: 10px; margin-top: 5px;">
-                            <span class="step-tag step-tag-2">ETAPA 2: APÓS GERAR A SS I57</span>
+                        <!-- 3. Campo Número da I57 (ETAPA 2) -->
+                        <div style="background: #FAFCFF; border: 1px solid #BAE6FD; border-radius: 10px; padding: 16px;">
+                            <span class="step-tag step-tag-2">⚡ ETAPA 2: APÓS GERAR A SS I57</span>
                             <div class="campo-fixo-adicional">
-                                <label style="color: #075985;">Digite aqui o número do Protocolo da SS I57 gerada:</label>
-                                <input id="numeroI57" class="in-blue" placeholder="Ex: 123456789" oninput="atualizarTextosI57()">
+                                <label style="color: #0369A1; font-weight: 700;">Digite aqui o número do Protocolo da SS I57 gerada:</label>
+                                <input id="numeroI57" class="in-blue" placeholder="" oninput="atualizarTextosI57()">
                             </div>
                             <div class="info-blue">
                                 💡 <strong>Dica:</strong> Este protocolo preencherá automaticamente o texto de aprovação da SS I20 e a Carta do PEW abaixo.
@@ -480,53 +531,61 @@
             </div>
         </div>
 
-        <!-- Bloco de Saída: Gerar I57 (ETAPA 1) -->
+        <!-- Bloco de Saída 1: Gerar I57 (ETAPA 1) -->
         <div class="parecer card-step-1">
-            <div class="parecer-header header-step-1">1. TEXTO PARA A GERAÇÃO DA SS I57</div>
-            <textarea id="resultado" placeholder="Preencha a Etapa 1 acima e clique em 'Gerar Parecer para I57'..."></textarea>
-            <div class="botoes">
-                <button onclick="gerarParecer()">Gerar Parecer para I57</button>
-                <button class="btn-secondary" onclick="copiarParecer()">Copiar Texto para Gerar a SS I57</button>
-                <button class="btn-danger" onclick="limparDados()">Limpar Campos</button>
+            <div class="card-header header-step-1">
+                <div class="card-header-title">1. TEXTO PARA A GERAÇÃO DA SS I57</div>
+                <div class="botoes-topo">
+                    <button onclick="gerarParecer()">Gerar Texto</button>
+                    <button class="btn-secondary" onclick="copiarParecer()">Copiar Texto</button>
+                    <button class="btn-danger" onclick="limparDados()">Limpar Campos</button>
+                </div>
             </div>
+            <textarea id="resultado" placeholder="Preencha os dados da Etapa 1 acima e clique em 'Gerar Texto'..."></textarea>
         </div>
 
-        <!-- Card de Saída: Aprovação da SS I20 (ETAPA 2) -->
+        <!-- Bloco de Saída 2: Aprovação da SS I20 (ETAPA 2) -->
         <div class="parecer card-step-2">
-            <div class="parecer-header header-step-2">2. TEXTO PARA APROVAÇÃO DA SS I20</div>
+            <div class="card-header header-step-2">
+                <div class="card-header-title">2. TEXTO PARA APROVAÇÃO DA SS I20</div>
+                <div class="botoes-topo">
+                    <button class="btn-secondary" onclick="copiarTextoI57()">Copiar Texto</button>
+                </div>
+            </div>
             <textarea id="resultadoI57" class="textarea-curto" readonly></textarea>
-            <div class="botoes">
-                <button class="btn-secondary" onclick="copiarTextoI57()">Copiar Texto de Aprovação I20</button>
-            </div>
         </div>
 
-        <!-- Card de Saída: Carta PEW (ETAPA 2) -->
+        <!-- Bloco de Saída 3: Carta PEW (ETAPA 2) -->
         <div class="parecer card-step-2">
-            <div class="parecer-header header-step-2">3. TEXTO PARA A CARTA DE APROVAÇÃO DO PROJETO NO PEW</div>
-            <textarea id="resultadoCartaPEW" class="textarea-medio" readonly></textarea>
-            <div class="botoes">
-                <button class="btn-secondary" onclick="copiarCartaPEW()">Copiar Carta para PEW</button>
+            <div class="card-header header-step-2">
+                <div class="card-header-title">3. TEXTO PARA A CARTA DE APROVAÇÃO DO PROJETO NO PEW</div>
+                <div class="botoes-topo">
+                    <button class="btn-secondary" onclick="copiarCartaPEW()">Copiar Texto</button>
+                </div>
             </div>
+            <textarea id="resultadoCartaPEW" class="textarea-medio" readonly></textarea>
         </div>
 
         <div class="footer-credits">Desenvolvido por Jose Eduardo Silva Dias - Registro: 51407 - Análise de Projetos</div>
     </div>
 
-    <!-- Toast de Notificação sem botão OK -->
-    <div id="toastNotification" class="toast">Texto copiado para a área de transferência</div>
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast">
+        <span>✓</span>
+        <span id="toastMessage">Texto copiado para a área de transferência</span>
+    </div>
 
     <script>
-        // Função para mostrar notificação temporária sem travar o usuário
         function mostrarToast(mensagem) {
             const toast = document.getElementById("toastNotification");
-            if (mensagem) toast.innerText = mensagem;
+            const toastMsg = document.getElementById("toastMessage");
+            if (mensagem) toastMsg.innerText = mensagem;
             toast.classList.add("show");
             setTimeout(() => {
                 toast.classList.remove("show");
             }, 2500);
         }
 
-        // Alterna a visibilidade dos campos extras com base nas seleções principais
         function atualizarCampos() {
             const trocaSim = document.getElementById("trocaPadrao").value === "SIM";
             const bombaSim = document.getElementById("bomba").value === "SIM";
@@ -538,23 +597,19 @@
             if (!bombaSim) document.getElementById("disjuntorBomba").selectedIndex = 0;
         }
 
-        // Atualiza dinamicamente os textos vinculados ao campo "Número da I57"
         function atualizarTextosI57() {
             const i57Valor = document.getElementById("numeroI57").value.trim();
 
-            // 1. Texto para Aprovação da SS I20
             const textoPrefixoAprovacao = "Projeto elétrico aprovado no sistema PEW - SS I57";
             document.getElementById("resultadoI57").value = i57Valor !== "" 
                 ? `${textoPrefixoAprovacao} ${i57Valor}` 
                 : textoPrefixoAprovacao;
 
-            // 2. Novo Texto para Carta de Aprovação do Projeto no PEW
             const protocoloTexto = i57Valor !== "" ? i57Valor : "XXXXXXXXXXXXXX";
             
-            document.getElementById("resultadoCartaPEW").value = `O protocolo de redes ainda não foi emitido. Foi gerado o protocolo de atendimento ${protocoloTexto}, encaminhado à equipe de atendimento comercial, que entrará em contato em até 5 dias úteis para emissão do protocolo de redes/ligação.\nCaso a solicitação não prossiga neste momento, poderá ser retomada com antecedência mínima de 6 meses da data prevista para ligação, mediante a informação deste protocolo nos canais de atendimento do Grupo B.`;
+            document.getElementById("resultadoCartaPEW").value = `Protocolo de redes não emitido. Gerado o protocolo de atendimento ${protocoloTexto}, encaminhado ao comercial (retorno em até 5 dias úteis). Caso não prossiga agora, a solicitação pode ser retomada com antecedência mínima de 6 meses da ligação, informando este protocolo nos canais do Grupo B.`;
         }
 
-        // Valida campos obrigatórios e monta o texto do Parecer para Geração da SS I57
         function gerarParecer() {
             const ids = [
                 { id: "disjuntor", msg: "Selecione a corrente do disjuntor geral." },
@@ -564,7 +619,6 @@
                 { id: "numero", msg: "Informe o número / complemento." }
             ];
 
-            // Loop de validação dos campos fixos essenciais
             for (let item of ids) {
                 let el = document.getElementById(item.id);
                 if (!el.value.trim()) {
@@ -579,14 +633,12 @@
             const ucElem = document.getElementById("uc");
             const disjBombaElem = document.getElementById("disjuntorBomba");
 
-            // Validação condicional da UC para Troca de Padrão
             if (troca === "SIM" && !ucElem.value.trim()) {
                 alert("O número da UC Fat B existente é obrigatório quando há troca de padrão.");
                 ucElem.focus();
                 return;
             }
 
-            // Validação condicional do disjuntor de Incêndio
             if (bomba === "SIM" && !disjBombaElem.value) {
                 alert("Selecione a corrente do disjuntor da medição para bomba de incêndio.");
                 disjBombaElem.focus();
@@ -601,15 +653,12 @@
             const disj = document.getElementById("disjuntor").value;
             const uc = ucElem.value.trim();
 
-            // Define o cabeçalho do texto dependendo se é Troca de Padrão ou Ligação Nova
             let texto = troca === "SIM"
                 ? `Conforme projeto elétrico ${pew}, favor gerar TROCA DE PADRÃO para a UC: ${uc}, considerando as seguintes características:`
                 : `Conforme projeto elétrico ${pew}, favor gerar PEDIDO DE LIGAÇÃO, considerando as seguintes características:`;
 
-            // Linha extra "- VER ANEXOS;" no final
             texto += `\n\n- Cidade: ${cidade};\n- Endereço: ${logradouro}, ${numero};\n- Complemento da UC: PE ${pewFormatado};\n- Grupo de Tensão: B;\n- Disjuntor: ${disj};\n- Declaração de Carga: Qtde = 1 em 4) Disjuntor > Disjuntor Individual > Trifásico Maior que 200A;\n- VER ANEXOS;`;
 
-            // Acrescenta trecho da bomba de incêndio se selecionado SIM
             if (bomba === "SIM") {
                 texto += `\n\nFoi liberada uma segunda medição em BT na mesma entrada de serviço com disjuntor ${disjBombaElem.value} exclusiva para sistema de combate a incêndio.`;
             }
@@ -617,7 +666,6 @@
             document.getElementById("resultado").value = texto;
         }
 
-        // Copia o conteúdo gerado do parecer com toast automático
         function copiarParecer() {
             const textarea = document.getElementById("resultado");
             if (!textarea.value) {
@@ -628,7 +676,6 @@
             mostrarToast("Texto para geração da I57 copiado!");
         }
 
-        // Copia o texto de Aprovação SS I20 com toast automático
         function copiarTextoI57() {
             const textarea = document.getElementById("resultadoI57");
             if (!textarea.value) {
@@ -639,7 +686,6 @@
             mostrarToast("Texto de aprovação I20 copiado!");
         }
 
-        // Copia o texto da Carta de Aprovação do Projeto no PEW com toast automático
         function copiarCartaPEW() {
             const textarea = document.getElementById("resultadoCartaPEW");
             if (!textarea.value) {
@@ -650,7 +696,6 @@
             mostrarToast("Texto da Carta PEW copiado!");
         }
 
-        // Reseta todos os campos do formulário para o padrão inicial
         function limparDados() {
             document.querySelectorAll("input").forEach(input => input.value = "");
             document.querySelectorAll("select").forEach(select => select.selectedIndex = 0);
@@ -659,7 +704,6 @@
             atualizarTextosI57();
         }
 
-        // Inicializa o estado visual ao carregar a página
         atualizarCampos();
         atualizarTextosI57();
     </script>
@@ -668,3 +712,4 @@
     <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
+```
